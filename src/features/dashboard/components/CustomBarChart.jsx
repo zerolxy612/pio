@@ -2,27 +2,37 @@ import { ArrowUpRight, ArrowDownRight } from 'lucide-react';
 
 export function CustomBarChart() {
   return (
-    <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100/50 flex flex-col h-full min-h-[300px]">
-      {/* Header */}
-      <div className="flex justify-center items-start mb-12 relative">
-        <div className="flex flex-col items-center">
-          <div className="text-[32px] font-bold text-gray-800 leading-tight">+80.9%</div>
-          <div className="text-[14px] text-gray-400 font-medium">Better than last month</div>
-        </div>
-        <div className="absolute right-0 top-0 text-gray-400 cursor-pointer hover:text-gray-600 transition-colors p-1">
-          <ArrowUpRight size={20} strokeWidth={2} />
-        </div>
+    <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100/50 flex flex-col h-full min-h-[320px] relative">
+      {/* Top Right Arrow */}
+      <div className="absolute right-6 top-6 w-8 h-8 flex items-center justify-center rounded-full border border-gray-100 text-gray-400 cursor-pointer hover:text-gray-600 transition-colors bg-white shadow-sm z-20">
+        <ArrowUpRight size={18} strokeWidth={2} />
       </div>
 
       {/* Bars Container */}
-      <div className="flex-grow flex items-end justify-center gap-7 relative h-[220px] pb-4">
+      <div className="w-[364px] mx-auto flex-grow flex items-end justify-between relative mt-4 pb-4">
+        
+        {/* Header Text Overlay */}
+        <div className="absolute top-0 left-0 w-[168px] flex flex-col items-center z-20">
+          <div className="text-[28px] font-bold text-gray-800 leading-tight">+80.9%</div>
+          <div className="text-[13px] text-gray-400 font-medium mt-0.5">Better than last month</div>
+        </div>
+
         {/* Background Dashed Line (Trend line) */}
-        <div className="absolute inset-0 pointer-events-none">
-          <svg width="100%" height="100%" preserveAspectRatio="none" className="absolute bottom-4">
+        <div className="absolute inset-x-0 top-0 bottom-4 pointer-events-none flex justify-center z-0">
+          <svg viewBox="0 0 364 204" preserveAspectRatio="none" className="absolute inset-0 w-full h-full overflow-visible">
             <path 
-              d="M 10,120 L 50,120 L 50,60 L 140,60 L 140,10 L 230,10 L 230,80 L 300,80" 
+              d="
+                M -10 112 
+                L 84 112 
+                L 84 51 
+                L 182 51 
+                L 182 0 
+                L 280 0 
+                L 280 82 
+                L 374 82
+              " 
               fill="none" 
-              stroke="#e5e7eb" 
+              stroke="#cbd5e1" 
               strokeWidth="2" 
               strokeDasharray="6 6" 
               vectorEffect="non-scaling-stroke"
@@ -47,12 +57,12 @@ export function CustomBarChart() {
         </div>
 
         {/* Bar 3 (Special Striped) */}
-        <div className="w-[70px] h-[100%] rounded-2xl relative flex justify-center border-[2px] border-dashed border-[#469aff] bg-[#bfdbfe] bg-[repeating-linear-gradient(45deg,rgba(255,255,255,0.7),rgba(255,255,255,0.7)_8px,transparent_8px,transparent_16px)] z-10">
+        <div className="w-[70px] h-[100%] rounded-2xl relative flex justify-center bg-[#bfdbfe] bg-[repeating-linear-gradient(45deg,rgba(255,255,255,0.7),rgba(255,255,255,0.7)_8px,transparent_8px,transparent_16px)] z-10">
           {/* Top Circle */}
-          <div className="absolute -top-11 left-1/2 -translate-x-1/2 w-5 h-5 rounded-full border-[3px] border-[#469aff] bg-white z-20"></div>
+          <div className="absolute -top-2.5 left-1/2 -translate-x-1/2 w-5 h-5 rounded-full border-[3px] border-[#469aff] bg-white z-20"></div>
           
           {/* Floating Label */}
-          <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#469aff] rounded-lg px-2.5 py-1 flex items-center gap-1 shadow-md z-10">
+          <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-[#469aff] rounded-lg px-2.5 py-1 flex items-center gap-1 shadow-md z-10">
             <span className="text-[13px] font-bold text-white">15K</span>
             <ArrowUpRight size={14} className="text-white" strokeWidth={3} />
           </div>

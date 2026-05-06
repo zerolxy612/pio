@@ -9,6 +9,7 @@ export function KpiCard({
   trend,
   titleColor = "text-[#469aff]",
   valueColor = "text-[#469aff]",
+  trendBg = "bg-transparent",
   delay = 0,
 }) {
   const { displayValue, isNumeric } = useCountUp(value, { delay });
@@ -38,7 +39,7 @@ export function KpiCard({
 
       {/* Trend */}
       <div className="flex items-center gap-1 text-[13px]">
-        <div className="flex items-center text-[#10b981] font-medium">
+        <div className={`flex items-center text-[#10b981] font-medium px-1.5 py-0.5 rounded-md ${trendBg}`}>
           <ArrowUpRight size={14} strokeWidth={2.5} />
           <span>{trend}</span>
         </div>

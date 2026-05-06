@@ -49,9 +49,9 @@ export function WorldMap() {
         },
         pieces: [
           { min: 80, max: 100, label: '80-100', color: '#f4bce6' }, // Pink
-          { min: 60, max: 80, label: '60-80', color: '#a5c8ff' },  // Light Blue
-          { min: 40, max: 60, label: '40-60', color: '#7fb3ff' },  // Blue
-          { min: 20, max: 40, label: '20-40', color: '#8ee0d5' },  // Cyan
+          { min: 60, max: 80, label: '60-80', color: '#7fb3ff' },  // Blue
+          { min: 40, max: 60, label: '40-60', color: '#99c8ff' },  // Light Blue
+          { min: 20, max: 40, label: '20-40', color: '#d7d7ff' },  // Purple-ish
           { value: 0, label: 'no data', color: '#e5e7eb' }         // Grey
         ]
       },
@@ -61,7 +61,7 @@ export function WorldMap() {
           type: 'map',
           map: 'world',
           roam: true,
-          zoom: 1.2,
+          zoom: 1.16,
           scaleLimit: {
             min: 1,
             max: 5
@@ -85,16 +85,16 @@ export function WorldMap() {
             }
           },
           data: [
-            { name: 'United States of America', value: 75 },
-            { name: 'China', value: 55 },
-            { name: 'Russia', value: 90 },
-            { name: 'Brazil', value: 35 },
-            { name: 'Australia', value: 65 },
-            { name: 'Canada', value: 45 },
-            { name: 'India', value: 85 },
-            { name: 'Greenland', value: 65 },
-            { name: 'Indonesia', value: 45 },
-            { name: 'Sweden', value: 45 }
+            { name: 'United States of America', value: 50 },
+            { name: 'China', value: 90 },
+            { name: 'Russia', value: 70 },
+            { name: 'Brazil', value: 50 },
+            { name: 'Australia', value: 30 },
+            { name: 'Canada', value: 30 },
+            { name: 'India', value: 70 },
+            { name: 'Greenland', value: 30 },
+            { name: 'Indonesia', value: 50 },
+            { name: 'Sweden', value: 70 }
           ]
         }
       ]
@@ -136,7 +136,7 @@ export function WorldMap() {
       </div>
 
       {/* Map Container */}
-      <div className="flex-grow w-full min-h-[350px] relative">
+      <div className="flex-grow w-full min-h-[360px] relative">
         {mapLoaded ? (
           <ReactECharts 
             option={getOption()} 
