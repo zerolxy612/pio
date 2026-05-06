@@ -1,6 +1,37 @@
-import { Plus, Calendar } from 'lucide-react';
+import { useState } from 'react';
+import { Calendar, Check, ChevronDown, Plus } from 'lucide-react';
+
+const dateRanges = [
+  '01-24 September',
+  'Last 7 days',
+  'Last 30 days',
+  'This quarter',
+];
+
+const widgets = [
+  'Trust Index',
+  'Risk Level',
+  'Incident Feed',
+  'World Map',
+  'Governance Score',
+];
 
 export function Header() {
+  const [selectedRange, setSelectedRange] = useState(dateRanges[0]);
+  const [isDateOpen, setIsDateOpen] = useState(false);
+  const [isWidgetOpen, setIsWidgetOpen] = useState(false);
+  const [addedWidgets, setAddedWidgets] = useState(['Trust Index', 'World Map']);
+
+  const toggleWidget = (widget) => {
+    setAddedWidgets((currentWidgets) => {
+      if (currentWidgets.includes(widget)) {
+        return currentWidgets.filter((item) => item !== widget);
+      }
+
+      return [...currentWidgets, widget];
+    });
+  };
+
   return (
     <header className="flex items-center justify-between bg-white px-8 py-4 rounded-2xl shadow-sm mb-6">
       {/* Left: Logo & Title */}
@@ -23,13 +54,81 @@ export function Header() {
 
       {/* Middle: Actions */}
       <div className="flex items-center gap-4">
-        <button className="flex items-center gap-2 px-5 py-2.5 rounded-full border border-gray-200 text-gray-600 hover:bg-gray-50 transition-colors text-[14px] font-medium">
-          <Plus size={16} className="text-gray-400" />
-          Add Widget
-        </button>
-        <div className="flex items-center gap-2 px-5 py-2.5 rounded-full border border-gray-200 text-gray-600 text-[14px] font-medium bg-white">
-          <Calendar size={16} className="text-gray-400" />
-          01-24 September
+        <div className="relative">
+          <button
+            type="button"
+            onClick={() => {
+              setIsWidgetOpen((isOpen) => !isOpen);
+              setIsDateOpen(false);
+            }}
+            className="flex items-center gap-2 px-5 py-2.5 rounded-full border border-gray-200 text-gray-600 hover:bg-gray-50 transition-colors text-[14px] font-medium"
+          >
+            <Plus size={16} className="text-gray-400" />
+            Add Widget
+          </button>
+
+          {isWidgetOpen && (
+            <div className="absolute right-0 top-[calc(100%+12px)] z-30 w-[240px] rounded-2xl border border-gray-100 bg-white p-3 shadow-xl shadow-gray-200/70">
+              <div className="px-2 pb-2">
+                <p className="text-[13px] font-semibold text-gray-800">Widget Library</p>
+                <p className="text-[12px] text-gray-400">{addedWidgets.length} active widgets</p>
+              </div>
+              <div className="space-y-1">
+                {widgets.map((widget) => {
+                  const isAdded = addedWidgets.includes(widget);
+
+                  return (
+                    <button
+                      key={widget}
+                      type="button"
+                      onClick={() => toggleWidget(widget)}
+                      className="flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-left text-[13px] font-medium text-gray-600 transition-colors hover:bg-[#f6f7fb]"
+                    >
+                      <span>{widget}</span>
+                      {isAdded && <Check size={15} className="text-[#469aff]" />}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div className="relative">
+          <button
+            type="button"
+            onClick={() => {
+              setIsDateOpen((isOpen) => !isOpen);
+              setIsWidgetOpen(false);
+            }}
+            className="flex items-center gap-2 px-5 py-2.5 rounded-full border border-gray-200 text-gray-600 text-[14px] font-medium bg-white hover:bg-gray-50 transition-colors"
+          >
+            <Calendar size={16} className="text-gray-400" />
+            {selectedRange}
+            <ChevronDown
+              size={15}
+              className={`text-gray-400 transition-transform ${isDateOpen ? 'rotate-180' : ''}`}
+            />
+          </button>
+
+          {isDateOpen && (
+            <div className="absolute right-0 top-[calc(100%+12px)] z-30 w-[210px] rounded-2xl border border-gray-100 bg-white p-2 shadow-xl shadow-gray-200/70">
+              {dateRanges.map((range) => (
+                <button
+                  key={range}
+                  type="button"
+                  onClick={() => {
+                    setSelectedRange(range);
+                    setIsDateOpen(false);
+                  }}
+                  className="flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-left text-[13px] font-medium text-gray-600 transition-colors hover:bg-[#f6f7fb]"
+                >
+                  <span>{range}</span>
+                  {selectedRange === range && <Check size={15} className="text-[#469aff]" />}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 

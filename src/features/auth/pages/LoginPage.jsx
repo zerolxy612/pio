@@ -28,15 +28,28 @@ export function LoginPage({ onLogin }) {
   const [showPassword, setShowPassword] = useState(false);
   const [mode, setMode] = useState('login');
   const [activeIntro, setActiveIntro] = useState(0);
+  const [resetSent, setResetSent] = useState(false);
 
   const isRegister = mode === 'register';
+  const isForgotPassword = mode === 'forgot-password';
   const currentIntro = introSlides[activeIntro];
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (isForgotPassword) {
+      setResetSent(true);
+      return;
+    }
+
     if (onLogin) {
       onLogin();
     }
+  };
+
+  const switchMode = (nextMode) => {
+    setMode(nextMode);
+    setResetSent(false);
   };
 
   return (
@@ -45,23 +58,27 @@ export function LoginPage({ onLogin }) {
       <div className="flex-1 flex flex-col justify-center items-center p-8">
         <div className="w-full max-w-[400px]">
           {/* Logo */}
-          <div className="flex justify-center mb-8">
-            <div className="w-20 h-20 rounded-full bg-[#f0f6ff] flex items-center justify-center">
-              <div className="w-14 h-14 rounded-full bg-white shadow-[0_2px_10px_rgba(0,0,0,0.06)] flex items-center justify-center">
-                <img src="/assets/login.png" alt="Logo" className="w-11 h-11 object-contain" />
-              </div>
-            </div>
+          <div className="flex justify-center mb-8 translate-y-2">
+            <img src="/assets/login.png" alt="Logo" className="w-24 h-24 object-contain" />
           </div>
           
           {/* Title */}
           <h1 className="text-[28px] font-bold text-center text-gray-900 mb-2">
-            {isRegister ? 'Register for PIO' : 'Welcome to PIO'}
+            {isForgotPassword
+              ? 'Reset Password'
+              : isRegister
+                ? 'Register for PIO'
+                : 'Welcome to PIO'}
           </h1>
-          <p className="text-center text-gray-500 mb-10 text-[15px]">Public Intelligence Observatory</p>
+          <p className="text-center text-gray-500 mb-10 text-[15px]">
+            {isForgotPassword
+              ? 'Enter your email to receive a reset link'
+              : 'Public Intelligence Observatory'}
+          </p>
 
           {/* Form */}
           <form className="space-y-5" onSubmit={handleSubmit}>
-            {isRegister && (
+            {isRegister && !isForgotPassword && (
               <div>
                 <label className="block text-[13px] text-gray-600 mb-1.5 ml-1">Name</label>
                 <input
@@ -81,7 +98,8 @@ export function LoginPage({ onLogin }) {
               />
             </div>
             
-            <div>
+            {!isForgotPassword && (
+              <div>
               <label className="block text-[13px] text-gray-600 mb-1.5 ml-1">Password</label>
               <div className="relative">
                 <input 
@@ -98,8 +116,16 @@ export function LoginPage({ onLogin }) {
                 </button>
               </div>
             </div>
+            )}
 
-            <div className="flex items-center justify-between text-[13px] pt-1">
+            {resetSent && (
+              <div className="rounded-lg bg-[#eef7ff] px-4 py-3 text-[13px] font-medium text-[#2879d8]">
+                Reset link sent. Please check your inbox.
+              </div>
+            )}
+
+            {!isForgotPassword && (
+              <div className="flex items-center justify-between text-[13px] pt-1">
               <label className="flex items-center text-gray-600 cursor-pointer select-none">
                 <input 
                   type="checkbox" 
@@ -108,16 +134,23 @@ export function LoginPage({ onLogin }) {
                 Remember Me
               </label>
               {!isRegister && (
-                <a href="#" className="text-[#469aff] hover:underline font-medium">Forgot Password ?</a>
+                <button
+                  type="button"
+                  onClick={() => switchMode('forgot-password')}
+                  className="text-[#469aff] hover:underline font-medium"
+                >
+                  Forgot Password ?
+                </button>
               )}
             </div>
+            )}
 
             <div className="pt-2">
               <button 
                 type="submit" 
                 className="w-full py-3.5 px-4 bg-[#469aff] text-white rounded-full font-medium hover:bg-blue-500 transition-colors shadow-sm shadow-blue-200"
               >
-                {isRegister ? 'Register' : 'Sign In'}
+                {isForgotPassword ? 'Send Reset Link' : isRegister ? 'Register' : 'Sign In'}
               </button>
             </div>
 
@@ -128,13 +161,17 @@ export function LoginPage({ onLogin }) {
             </div>
 
             <p className="text-center text-[13px] text-gray-500">
-              {isRegister ? 'Already have account ? ' : "Don't have account ? "}
+              {isForgotPassword
+                ? 'Remember your password ? '
+                : isRegister
+                  ? 'Already have account ? '
+                  : "Don't have account ? "}
               <button
                 type="button"
-                onClick={() => setMode(isRegister ? 'login' : 'register')}
+                onClick={() => switchMode(isRegister || isForgotPassword ? 'login' : 'register')}
                 className="text-[#469aff] hover:underline font-medium"
               >
-                {isRegister ? 'Sign In' : 'Register'}
+                {isRegister || isForgotPassword ? 'Sign In' : 'Register'}
               </button>
             </p>
           </form>
