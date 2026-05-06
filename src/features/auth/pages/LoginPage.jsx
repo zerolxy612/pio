@@ -1,8 +1,15 @@
 import { EyeOff, Eye } from 'lucide-react';
 import { useState } from 'react';
 
-export function LoginPage() {
+export function LoginPage({ onLogin }) {
   const [showPassword, setShowPassword] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (onLogin) {
+      onLogin();
+    }
+  };
 
   return (
     <div className="flex min-h-screen bg-white">
@@ -23,7 +30,7 @@ export function LoginPage() {
           <p className="text-center text-gray-500 mb-10 text-[15px]">Public Intelligence Observatory</p>
 
           {/* Form */}
-          <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
+          <form className="space-y-5" onSubmit={handleSubmit}>
             <div>
               <label className="block text-[13px] text-gray-600 mb-1.5 ml-1">Email Address</label>
               <input 

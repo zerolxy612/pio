@@ -1,46 +1,92 @@
-import { GrowthChart } from '../components/GrowthChart'
-import { MetricCard } from '../components/MetricCard'
-import { dashboardMetrics } from '../config/chartOptions'
+import { Header } from '../components/Header';
+import { KpiCard } from '../components/KpiCard';
+import { IncidentsList } from '../components/IncidentsList';
+import { WorldMap } from '../components/WorldMap';
 
 export function DashboardPage() {
   return (
-    <main className="min-h-screen px-6 py-10">
-      <div className="mx-auto max-w-6xl">
-        <header className="mb-8">
-          <p className="text-sm font-semibold uppercase tracking-wide text-blue-600">
-            React + Tailwind + ECharts
-          </p>
-          <h1 className="mt-3 text-4xl font-bold text-gray-950">
-            Analytics Dashboard
-          </h1>
-          <p className="mt-3 max-w-2xl text-base text-gray-600">
-            Dashboard module for charts, metrics, and statistics panels.
-          </p>
-        </header>
+    <div className="min-h-screen bg-[#f6f7fb] p-6 font-sans">
+      <div className="max-w-[1600px] mx-auto">
+        <Header />
 
-        <section className="grid gap-4 md:grid-cols-3">
-          {dashboardMetrics.map((metric) => (
-            <MetricCard key={metric.label} {...metric} />
-          ))}
-        </section>
-
-        <section className="mt-6 rounded-lg border border-gray-200 bg-white p-5 shadow-sm">
-          <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <h2 className="text-xl font-semibold text-gray-950">
-                Growth Overview
-              </h2>
-              <p className="text-sm text-gray-500">
-                Monthly revenue and active user trend.
-              </p>
+        <div className="grid grid-cols-1 xl:grid-cols-[55%_1fr] gap-6">
+          {/* Left Column */}
+          <div className="flex flex-col gap-6">
+            {/* KPI Grid */}
+            <div className="grid grid-cols-2 gap-4">
+              <KpiCard 
+                title="Global AI Trust Index" 
+                value="52.6" 
+                suffix="/100" 
+                trend="+6.2%" 
+                titleColor="text-[#469aff]" 
+                valueColor="text-[#469aff]" 
+              />
+              <KpiCard 
+                title="Hong Kong AI Trust Index" 
+                value="63.8" 
+                suffix="/100" 
+                trend="+3.1%" 
+                titleColor="text-[#10b981]" 
+                valueColor="text-[#10b981]" 
+              />
+              <KpiCard 
+                title="Misinformation Risk Level" 
+                value="High" 
+                trend="+12%" 
+                titleColor="text-[#d946ef]" 
+                valueColor="text-[#d946ef]" 
+              />
+              <KpiCard 
+                title="Governance Activity Score" 
+                value="68.7" 
+                suffix="/100" 
+                trend="+5.6%" 
+                titleColor="text-[#f59e0b]" 
+                valueColor="text-[#f59e0b]" 
+              />
+              <KpiCard 
+                title="Narrative Volatility" 
+                value="72.6" 
+                suffix="/100" 
+                trend="+8.9%" 
+                titleColor="text-[#10b981]" 
+                valueColor="text-[#10b981]" 
+              />
+              <KpiCard 
+                title="Early-warning Signals" 
+                value="7" 
+                trend="+2" 
+                titleColor="text-[#469aff]" 
+                valueColor="text-[#469aff]" 
+              />
             </div>
-            <button className="rounded-md bg-gray-950 px-4 py-2 text-sm font-semibold text-white transition hover:bg-gray-800">
-              Export
-            </button>
+
+            {/* Incidents List & Placeholder for Bar Chart */}
+            <div className="grid grid-cols-2 gap-4 flex-grow">
+              <IncidentsList />
+              
+              {/* Placeholder for Bar Chart (Phase 3) */}
+              <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100/50 flex flex-col items-center justify-center text-gray-400 min-h-[300px]">
+                <span className="text-sm font-medium">Bar Chart Placeholder</span>
+              </div>
+            </div>
           </div>
-          <GrowthChart />
-        </section>
+
+          {/* Right Column */}
+          <div className="flex flex-col gap-6">
+            {/* Map Widget */}
+            <div className="flex-grow min-h-[450px]">
+              <WorldMap />
+            </div>
+
+            {/* Gauge Chart Placeholder (Phase 3) */}
+            <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100/50 h-[300px] flex flex-col items-center justify-center text-gray-400">
+              <span className="text-sm font-medium">Gauge Chart Placeholder</span>
+            </div>
+          </div>
+        </div>
       </div>
-    </main>
-  )
+    </div>
+  );
 }
