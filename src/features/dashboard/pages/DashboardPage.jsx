@@ -7,7 +7,7 @@ import { SegmentedGauge } from '../components/SegmentedGauge';
 
 export function DashboardPage() {
   return (
-    <div className="min-h-screen bg-[#f6f7fb] p-6 font-sans">
+    <div className="min-h-screen bg-[#f9f9f9] p-6 font-sans">
       <div className="max-w-[1600px] mx-auto">
         <div className="animate-fade-up">
           <Header />
