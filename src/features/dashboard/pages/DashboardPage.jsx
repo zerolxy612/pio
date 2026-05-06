@@ -2,6 +2,8 @@ import { Header } from '../components/Header';
 import { KpiCard } from '../components/KpiCard';
 import { IncidentsList } from '../components/IncidentsList';
 import { WorldMap } from '../components/WorldMap';
+import { CustomBarChart } from '../components/CustomBarChart';
+import { SegmentedGauge } from '../components/SegmentedGauge';
 
 export function DashboardPage() {
   return (
@@ -62,14 +64,10 @@ export function DashboardPage() {
               />
             </div>
 
-            {/* Incidents List & Placeholder for Bar Chart */}
+            {/* Incidents List & Custom Bar Chart */}
             <div className="grid grid-cols-2 gap-4 flex-grow">
               <IncidentsList />
-              
-              {/* Placeholder for Bar Chart (Phase 3) */}
-              <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100/50 flex flex-col items-center justify-center text-gray-400 min-h-[300px]">
-                <span className="text-sm font-medium">Bar Chart Placeholder</span>
-              </div>
+              <CustomBarChart />
             </div>
           </div>
 
@@ -80,9 +78,9 @@ export function DashboardPage() {
               <WorldMap />
             </div>
 
-            {/* Gauge Chart Placeholder (Phase 3) */}
-            <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100/50 h-[300px] flex flex-col items-center justify-center text-gray-400">
-              <span className="text-sm font-medium">Gauge Chart Placeholder</span>
+            {/* Gauge Chart */}
+            <div className="h-[300px]">
+              <SegmentedGauge />
             </div>
           </div>
         </div>
