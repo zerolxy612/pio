@@ -1,5 +1,5 @@
-import { DashboardPage } from '../features/dashboard'
+import { LoginPage } from '../features/auth/pages/LoginPage'
 
 export function App() {
-  return <DashboardPage />
+  return <LoginPage />
 }
