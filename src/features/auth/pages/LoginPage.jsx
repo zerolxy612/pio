@@ -1,8 +1,36 @@
 import { EyeOff, Eye } from 'lucide-react';
 import { useState } from 'react';
 
+const introSlides = [
+  {
+    title: 'Public Intelligence Observatory',
+    description:
+      'PIO introduces the concept of public intelligence infrastructure — the informational, cognitive, and institutional systems that allow societies to reason collectively, make decisions, and maintain trust. As AI reshapes these systems at scale, PIO provides the methods, tools, and frameworks to monitor, analyze, and guide that transformation.',
+  },
+  {
+    title: 'Trust Index Monitoring',
+    description:
+      'Track global and regional AI trust indicators, compare shifts across public narratives, and identify where confidence in institutions, media, and AI systems is changing fastest.',
+  },
+  {
+    title: 'Risk and Signal Detection',
+    description:
+      'Surface misinformation pressure, governance activity, and early-warning signals from public data streams so teams can move from scattered observations to shared situational awareness.',
+  },
+  {
+    title: 'Research Dashboard',
+    description:
+      'Bring maps, KPI cards, incident lists, and analytical charts into one workspace for researchers, policy teams, and operators studying public intelligence in the AI era.',
+  },
+];
+
 export function LoginPage({ onLogin }) {
   const [showPassword, setShowPassword] = useState(false);
+  const [mode, setMode] = useState('login');
+  const [activeIntro, setActiveIntro] = useState(0);
+
+  const isRegister = mode === 'register';
+  const currentIntro = introSlides[activeIntro];
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -20,17 +48,30 @@ export function LoginPage({ onLogin }) {
           <div className="flex justify-center mb-8">
             <div className="w-20 h-20 rounded-full bg-[#f0f6ff] flex items-center justify-center">
               <div className="w-14 h-14 rounded-full bg-white shadow-[0_2px_10px_rgba(0,0,0,0.06)] flex items-center justify-center">
-                <img src="/assets/login.png" alt="Logo" className="w-6 h-6 object-contain" />
+                <img src="/assets/login.png" alt="Logo" className="w-11 h-11 object-contain" />
               </div>
             </div>
           </div>
           
           {/* Title */}
-          <h1 className="text-[28px] font-bold text-center text-gray-900 mb-2">Welcome to PIO</h1>
+          <h1 className="text-[28px] font-bold text-center text-gray-900 mb-2">
+            {isRegister ? 'Register for PIO' : 'Welcome to PIO'}
+          </h1>
           <p className="text-center text-gray-500 mb-10 text-[15px]">Public Intelligence Observatory</p>
 
           {/* Form */}
           <form className="space-y-5" onSubmit={handleSubmit}>
+            {isRegister && (
+              <div>
+                <label className="block text-[13px] text-gray-600 mb-1.5 ml-1">Name</label>
+                <input
+                  type="text"
+                  placeholder="Your name"
+                  className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:border-[#469aff] focus:ring-1 focus:ring-[#469aff] transition-colors text-sm"
+                />
+              </div>
+            )}
+
             <div>
               <label className="block text-[13px] text-gray-600 mb-1.5 ml-1">Email Address</label>
               <input 
@@ -66,7 +107,9 @@ export function LoginPage({ onLogin }) {
                 />
                 Remember Me
               </label>
-              <a href="#" className="text-[#469aff] hover:underline font-medium">Forgot Password ?</a>
+              {!isRegister && (
+                <a href="#" className="text-[#469aff] hover:underline font-medium">Forgot Password ?</a>
+              )}
             </div>
 
             <div className="pt-2">
@@ -74,7 +117,7 @@ export function LoginPage({ onLogin }) {
                 type="submit" 
                 className="w-full py-3.5 px-4 bg-[#469aff] text-white rounded-full font-medium hover:bg-blue-500 transition-colors shadow-sm shadow-blue-200"
               >
-                Sign In
+                {isRegister ? 'Register' : 'Sign In'}
               </button>
             </div>
 
@@ -85,7 +128,14 @@ export function LoginPage({ onLogin }) {
             </div>
 
             <p className="text-center text-[13px] text-gray-500">
-              Don't have account ? <a href="#" className="text-[#469aff] hover:underline font-medium">Register</a>
+              {isRegister ? 'Already have account ? ' : "Don't have account ? "}
+              <button
+                type="button"
+                onClick={() => setMode(isRegister ? 'login' : 'register')}
+                className="text-[#469aff] hover:underline font-medium"
+              >
+                {isRegister ? 'Sign In' : 'Register'}
+              </button>
             </p>
           </form>
         </div>
@@ -100,17 +150,24 @@ export function LoginPage({ onLogin }) {
           </div>
           
           {/* Text Content */}
-          <h2 className="text-[32px] font-semibold text-white mb-4 tracking-wide">Public Intelligence Observatory</h2>
+          <h2 className="text-[32px] font-semibold text-white mb-4 tracking-wide">{currentIntro.title}</h2>
           <p className="text-blue-50 text-[15px] leading-relaxed mb-10 opacity-90 font-light">
-            PIO introduces the concept of public intelligence infrastructure — the informational, cognitive, and institutional systems that allow societies to reason collectively, make decisions, and maintain trust. As AI reshapes these systems at scale, PIO provides the methods, tools, and frameworks to monitor, analyze, and guide that transformation.
+            {currentIntro.description}
           </p>
 
           {/* Carousel Indicators */}
           <div className="flex space-x-2.5">
-            <div className="w-8 h-1.5 bg-white rounded-full"></div>
-            <div className="w-4 h-1.5 bg-white/30 rounded-full"></div>
-            <div className="w-4 h-1.5 bg-white/30 rounded-full"></div>
-            <div className="w-4 h-1.5 bg-white/30 rounded-full"></div>
+            {introSlides.map((slide, index) => (
+              <button
+                key={slide.title}
+                type="button"
+                aria-label={`Show ${slide.title}`}
+                onClick={() => setActiveIntro(index)}
+                className={`h-1.5 rounded-full transition-all ${
+                  activeIntro === index ? 'w-8 bg-white' : 'w-4 bg-white/30 hover:bg-white/50'
+                }`}
+              />
+            ))}
           </div>
         </div>
       </div>

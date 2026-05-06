@@ -1,8 +1,23 @@
 import { ArrowUpRight } from 'lucide-react';
 
-export function KpiCard({ title, value, suffix, trend, titleColor = "text-[#469aff]", valueColor = "text-[#469aff]" }) {
+import { useCountUp } from '../../../shared/hooks/useCountUp';
+
+export function KpiCard({
+  title,
+  value,
+  suffix,
+  trend,
+  titleColor = "text-[#469aff]",
+  valueColor = "text-[#469aff]",
+  delay = 0,
+}) {
+  const { displayValue, isNumeric } = useCountUp(value, { delay });
+
   return (
-    <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100/50 relative flex flex-col justify-between">
+    <div
+      className="dashboard-card animate-fade-up bg-white rounded-2xl p-6 shadow-sm border border-gray-100/50 relative flex flex-col justify-between transition-[transform,box-shadow,border-color] duration-300 ease-[var(--ease-out-quint)] hover:-translate-y-1 hover:shadow-lg hover:shadow-gray-200/70 hover:border-gray-200"
+      style={{ animationDelay: `${delay}ms` }}
+    >
       {/* Top Right Icon */}
       <div className="absolute top-6 right-6 text-gray-400 cursor-pointer hover:text-gray-600 transition-colors">
         <ArrowUpRight size={20} strokeWidth={2} />
@@ -13,7 +28,11 @@ export function KpiCard({ title, value, suffix, trend, titleColor = "text-[#469a
 
       {/* Value */}
       <div className="flex items-baseline gap-1 mb-4">
-        <span className={`text-[42px] font-bold tracking-tight leading-none ${valueColor}`}>{value}</span>
+        <span
+          className={`text-[42px] font-bold tracking-tight leading-none ${valueColor} ${isNumeric ? 'tabular-nums' : ''}`}
+        >
+          {displayValue}
+        </span>
         {suffix && <span className="text-gray-400 font-medium text-lg">{suffix}</span>}
       </div>
 
